@@ -1,0 +1,106 @@
+/* QUESTION 1
+1a
+Table for Pet Owners' information, with a reference to another table called "customerid".
+No columns can have null values
+*/
+
+CREATE TABLE Pets (
+	PetID INT NOT NULL UNIQUE, 
+	Pet_Name VARCHAR(100) NOT NULL,
+	OwnerID INT NOT NULL UNIQUE,
+	Customer_First_Name VARCHAR(100) NOT NULL,
+	Customer_Last_Name VARCHAR(100) NOT NULL,
+	Games_Attended INT NOT NULL,
+	PRIMARY KEY (PetID),
+	FOREIGN KEY (OwnerID) REFERENCES customerid(OwnerID)
+);
+
+
+/* 1b
+Table containing relevant information about the volunteers. Column names do not contain "Volunteer" (except for VolunteerID) because it would be redundant.
+*/
+
+CREATE TABLE Volunteer_tbl (
+	VolunteerID INT NOT NULL UNIQUE, 
+	First_Name VARCHAR(100) NOT NULL,
+	Phone_Number INT NOT NULL,
+	Email VARCHAR(100) NOT NULL,
+	Start_Date DATETIME NOT NULL,
+	Street_Address VARCHAR(250) NULL,
+	Zip_Code INT NULL,
+	State VARCHAR(2) NOT NULL,
+	City VARCHAR(100) NOT NULL,
+	Secondary_Phone_Number INT NULL
+);
+
+/* 1c
+Extra relevant data: Last name of volunteer, date of birth of volunteer, emergency contact phone number
+Columns would be inputed as extra lines within the Create Table query in the following manner:
+*/
+
+	Last_Name VARCHAR(250) NOT NULL
+	Date_Birth DATE NOT NULL
+	Emergency_Contact_Number INT NOT NULL
+
+-- Note: this standalone code cannot actually run by itself 
+
+
+/*QUESTION 2
+2a
+Returns the entire table (every data point) rearranged by salary (highest to lowest) - Ranks employees by salary.
+*/
+
+SELECT * FROM Employees
+ORDER BY Salary DESC;
+
+
+/* 2b
+Obtain information about employees' ID, last name, salary, and title, only for employees who are programmers.
+*/
+
+SELECT EmployeeID, LastName, Salary, Title
+FROM Employees
+WHERE Title = ‘Programmer’;
+
+
+
+/* 2c
+Obtain information about employees' ID, last name, hire date and title, for employees who were hired between Jan 1, 2021 and March 1, 2022.
+*/
+
+SELECT EmployeeID, LastName, HireDate, Title
+FROM Employees
+WHERE HireDate BETWEEN ‘2021-01-01 00:00:00’ AND ‘2022-03-01 23:59:59’;
+
+
+/* 2d
+Obtain all data from employees whose last name starts with the letter P.
+*/
+
+SELECT * FROM Employees
+WHERE LastName LIKE ‘P%’;
+
+
+
+/* 2e
+
+There is a big difference in using the sum and the count functions. 
+First, the sum function can only be used in the Salary column, while the count function can be used in all. 
+Second, even in the salary column, these functions will return different results. The sum function will add all of the values in the column and return one single value. 
+The count function will count how many data points exist in the column and return that value. 
+*/
+
+SELECT SUM(Salary)
+FROM Employees;  
+
+/* All of the following three queries will return the same value, because the table has the same number of data points in each of the three columns
+*/
+
+SELECT COUNT(Salary)
+FROM Employees;
+
+SELECT COUNT(EmployeeID)
+FROM Employees;
+
+SELECT COUNT(Title)
+FROM Employees;
